@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -84,12 +85,10 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
 
     @NonNull
     public List<Task> loadTasks() {
-        List<Task> tasks = new ArrayList<>();
-        Collection<? extends Task> savedTasks = new Gson().fromJson(sharedPreferences.getString(SAVED_TASKS, ""), new TypeToken<List<Task>>() { }.getType());
-        if (savedTasks != null) {
-            tasks.addAll(savedTasks);
-        }
-        return tasks;
+        Task[] savedTasks = new Gson().fromJson(sharedPreferences.getString(SAVED_TASKS, null), Task[].class);
+        if (savedTasks != null && savedTasks.length > 0) {
+            return new ArrayList<>(Arrays.asList(savedTasks));
+        } else return new ArrayList<>();
     }
 
     @Override
