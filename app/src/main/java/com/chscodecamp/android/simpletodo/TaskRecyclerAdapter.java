@@ -32,17 +32,16 @@ class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.TaskV
         final Task task = tasks.get(position);
 
         holder.itemName.setText(task.getTitle());
-        holder.checkBox.setChecked(task.isCompleted());
+        setStrikethrough(task.isCompleted(), holder.itemName);
 
+        holder.checkBox.setChecked(task.isCompleted());
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 task.setCompleted(holder.checkBox.isChecked());
+                setStrikethrough(task.isCompleted(), holder.itemName);
                 if (callback != null) {
                     callback.onTaskUpdated();
-                }
-                if (task.isCompleted()) {
-                    holder.itemName.setPaintFlags(holder.itemName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 }
             }
         });
@@ -65,6 +64,14 @@ class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.TaskV
             super(v);
             itemName = (TextView) v.findViewById(R.id.item_name);
             checkBox = (CheckBox) v.findViewById(R.id.item_checkbox);
+        }
+    }
+
+    private void setStrikethrough(boolean checked, TextView textView) {
+        if (checked) {
+            textView.setPaintFlags(textView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            textView.setPaintFlags(0);
         }
     }
 }
