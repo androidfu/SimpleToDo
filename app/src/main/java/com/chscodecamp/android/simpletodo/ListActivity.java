@@ -80,7 +80,7 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
     }
 
     public void saveTasks(@NonNull List<Task> taskList) {
-        sharedPreferences.edit().putString(SAVED_TASKS, new Gson().toJson(taskList)).apply();
+        sharedPreferences.edit().putString(SAVED_TASKS, new Gson().toJson(taskList)).commit();
     }
 
     @NonNull
