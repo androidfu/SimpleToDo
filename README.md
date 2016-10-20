@@ -1,8 +1,8 @@
-# BetterToDo #
+# SimpleToDo #
 
-SimpleToDo was co-written by Bill Mote and Tyler Roach in support of an intermediate Android class being offered by [Charleston's Digital Corridor](http://www.charlestondigitalcorridor.com/).
+SimpleToDo was co-written by Bill Mote and Tyler Roach in support of an introduction to Android class being offered by [Charleston's Digital Corridor](http://www.charlestondigitalcorridor.com/).
 
-Get it on [Google Play](https://play.google.com/store/apps/details?id=com.chscodecamp.android.bettertodo) (COMING SOON!)
+Get it on [Google Play](https://play.google.com/store/apps/details?id=com.chscodecamp.android.simpletodo) (COMING SOON!)
 
 ### How do I use this code? ###
 
@@ -17,4 +17,4 @@ Get it on [Google Play](https://play.google.com/store/apps/details?id=com.chscod
 
 ### Screen Shots ###
 
-![Alt Home Screen](/BetterToDo_HomeScreen.png?raw=true "Movie List")
+![Alt Home Screen](/SimpleToDo_HomeScreen.png?raw=true "Movie List")
