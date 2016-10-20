@@ -37,7 +37,6 @@ class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.TaskV
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View view) {
                 task.setCompleted(holder.checkBox.isChecked());
-                holder.checkBox.setChecked(task.isCompleted());
                 if (callback != null) {
                     callback.onTaskUpdated();
                 }
