@@ -27,17 +27,17 @@ class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.TaskV
     }
 
     @Override
-    public void onBindViewHolder(TaskViewHolder holder, int position) {
+    public void onBindViewHolder(final TaskViewHolder holder, int position) {
 
         final Task task = tasks.get(position);
 
         holder.itemName.setText(task.getTitle());
         holder.checkBox.setChecked(task.isCompleted());
 
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                task.setCompleted(isChecked);
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View view) {
+                task.setCompleted(holder.checkBox.isChecked());
+                holder.checkBox.setChecked(task.isCompleted());
                 if (callback != null) {
                     callback.onTaskUpdated();
                 }
