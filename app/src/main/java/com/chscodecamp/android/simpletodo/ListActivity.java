@@ -13,31 +13,31 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapter.Callback {
 
-    private final Object syncTasks = new Object();
+    private static final String SAVED_TASKS = "savedTasks";
     private RecyclerView recyclerView;
     private EditText addItemEditText;
     private TaskRecyclerAdapter taskRecyclerAdapter;
     private List<Task> tasks = new ArrayList<>();
     private SharedPreferences sharedPreferences;
-    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        sharedPreferences = getApplication().getSharedPreferences(getApplication().getPackageName(), Context.MODE_PRIVATE);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        gson = new Gson();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         addItemEditText = (EditText) findViewById(R.id.add_item_edit_text);
         ImageButton addItem = (ImageButton) findViewById(R.id.add_item);
@@ -58,7 +58,6 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
     @Override
     protected void onResume() {
         super.onResume();
-        sharedPreferences = getApplication().getSharedPreferences(getApplication().getPackageName(), Context.MODE_PRIVATE);
 
         tasks = loadTasks();
 
@@ -80,21 +79,15 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
     }
 
     public void saveTasks(@NonNull List<Task> taskList) {
-        synchronized (syncTasks) {
-            for (int i = 0; i < taskList.size(); i++) {
-                sharedPreferences.edit().putString(String.format(Locale.ENGLISH, "%d", i), gson.toJson(taskList.get(i))).apply();
-            }
-        }
+        sharedPreferences.edit().putString(SAVED_TASKS, new Gson().toJson(taskList)).apply();
     }
 
     @NonNull
     public List<Task> loadTasks() {
         List<Task> tasks = new ArrayList<>();
-        synchronized (syncTasks) {
-            Map<String, ?> keys = sharedPreferences.getAll();
-            for (Map.Entry<String, ?> entry : keys.entrySet()) {
-                tasks.add(gson.fromJson((String) entry.getValue(), Task.class));
-            }
+        Collection<? extends Task> savedTasks = new Gson().fromJson(sharedPreferences.getString(SAVED_TASKS, ""), new TypeToken<List<Task>>() { }.getType());
+        if (savedTasks != null) {
+            tasks.addAll(savedTasks);
         }
         return tasks;
     }
