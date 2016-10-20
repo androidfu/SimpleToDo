@@ -1,11 +1,11 @@
 package com.chscodecamp.android.simpletodo;
 
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -35,11 +35,15 @@ class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.TaskV
         holder.checkBox.setChecked(task.isCompleted());
 
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View view) {
+            @Override
+            public void onClick(View view) {
                 task.setCompleted(holder.checkBox.isChecked());
                 holder.checkBox.setChecked(task.isCompleted());
                 if (callback != null) {
                     callback.onTaskUpdated();
+                }
+                if (task.isCompleted()) {
+                    holder.itemName.setPaintFlags(holder.itemName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 }
             }
         });
@@ -48,6 +52,10 @@ class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.TaskV
     @Override
     public int getItemCount() {
         return tasks.size();
+    }
+
+    interface Callback {
+        void onTaskUpdated();
     }
 
     class TaskViewHolder extends RecyclerView.ViewHolder {
@@ -59,9 +67,5 @@ class TaskRecyclerAdapter extends RecyclerView.Adapter<TaskRecyclerAdapter.TaskV
             itemName = (TextView) v.findViewById(R.id.item_name);
             checkBox = (CheckBox) v.findViewById(R.id.item_checkbox);
         }
-    }
-
-    interface Callback {
-        void onTaskUpdated();
     }
 }
