@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SimpleToDo</string>
+    <string name="todo_entry">Todo Entry</string>
+    <string name="add_task">Add Task</string>
+    <string name="enter_a_todo_item_here">Enter a ToDo Item Here</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.chscodecamp.android.simpletodo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,11 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapter.Callback {
@@ -79,6 +78,7 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
         saveTasks(tasks);
     }
 
+    @SuppressLint("CommitPrefEdits")
     public void saveTasks(@NonNull List<Task> taskList) {
         sharedPreferences.edit().putString(SAVED_TASKS, new Gson().toJson(taskList)).commit();
     }
