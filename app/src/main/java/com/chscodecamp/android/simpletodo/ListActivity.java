@@ -9,9 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -40,7 +43,7 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         addItemEditText = (EditText) findViewById(R.id.add_item_edit_text);
-        ImageButton addItem = (ImageButton) findViewById(R.id.add_item);
+        final ImageButton addItem = (ImageButton) findViewById(R.id.add_item);
 
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +52,7 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
                 if (title.length() > 0) {
                     addTask(new Task(title));
                     taskRecyclerAdapter.notifyItemInserted(taskRecyclerAdapter.getItemCount() - 1);
-                    addItemEditText.setText("");
+                    addItemEditText.setText(null);
                 }
             }
         });
@@ -94,5 +97,6 @@ public class ListActivity extends AppCompatActivity implements TaskRecyclerAdapt
     @Override
     public void onTaskUpdated() {
         saveTasks(tasks);
+
     }
 }
